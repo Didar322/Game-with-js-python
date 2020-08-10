@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>ScoreBoard</title>
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+    <style>
+        .center {
+            margin: auto;
+            width: 50%;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar center">
+        <a class="navbar-brand" href="/">Home</a>
+        <a class="navbar-brand" href="/ScoreBoard">ScoreBoard</a>
+    </nav>
+    <!--Scoreboard with table and flask code-->
+    <div class="container center">
+        <div class="card border-dark mb-3" style="max-width: 60rem;">
+            <div class="card-header">Header</div>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">NickName</th>
+                    <th scope="col">Score</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">0</th>
+                    <td>Akashi23</td>
+                    <td>999999</td>
+                </tr>
+                <!--flask code with jinja2 
+                    using pandas dataframes and 
+                    represent with <tr><td> tags-->
+                {% for index, row in df.iterrows() %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{row['nickname']}}</td>
+                    <td>{{row['score']}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        
+    </div>
+    
+</body>
+</html>

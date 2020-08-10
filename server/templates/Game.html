@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Game</title>
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+    <script src="static/js/jquery-3.5.1.min.js"></script>
+    <style>
+        canvas { background: #eee; display: inline-block;}
+        .center {
+            margin: auto;
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a class="navbar-brand" href="/">Home</a>
+        <a class="navbar-brand" href="/ScoreBoard">ScoreBoard</a>
+    </nav>
+    <div class="hide" >
+    <div class='container'>
+        <form action='/ScoreBoard' method='POST'>
+        <div class='input-group mb-3'>
+            <input type='text' class='form-control' id='nickname' name='nickname' placeholder='Nickname:' aria-label='Nickname:' aria-describedby='basic-addon2'>
+            <div class="input-group-append">
+                <input type="text" class="form-control input-group-text" aria-label="Score" id="score" name="score" readonly="readonly">
+            </div>
+            <div class='input-group-append'>
+              <button class='btn btn-outline-secondary mb-3' type='submit'>Button</button>
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col card bg-light mb-3">
+                <div class="card-header">Mouse</div>
+                <canvas id="game2" style="z-index:1;"></canvas>
+            </div>
+            <div class="col card bg-light mb-3">
+                <div class="card-header">Keyboard <-- --></div>
+                <canvas id="game1" style="z-index:1;"></canvas>
+            </div>
+    </div>
+    <div>
+        <script src="static/game/ui.js"></script>
+        <script src="static/game/Game1.js"></script>
+        <script src="static/game/Game2.js"></script>
+        <script>
+            // it is my decision work through html file to seeing how it works
+            var interval;
+            var enable = true;
+            $('.hide').hide(); // i dont have any idea how to create card above area and then i just hide it
+            startUI();
+
+            function update(){
+                if(!paused)
+                { 
+                    updateArea();
+                    updateGameArea();
+                    $("#score").val(score);
+                    if(flag){                // i know it is awful statement 
+                        $(".row").remove();
+                        $(".hide").show();
+                        paused =! paused; 
+                    }
+                }  
+            }
+            function startGame(enable){
+                if(enable){
+                    startGame1();
+                    startGame2();
+                }
+            }
+            window.addEventListener('keydown', function (e) {
+                var key = e.keyCode;
+                if (key === 80)
+                {
+                    togglePause();
+                }
+                else if (key === 32)
+                {
+                    startGame(enable);
+                    if(enable){
+                        interval = setInterval(update, 20);
+                    }
+                    enable = false;
+                }
+                if (key === 82)
+                {
+                    location.reload();
+                }
+            });
+
+        </script>
+    </div>
+</body>
+</html>
